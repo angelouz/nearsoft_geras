@@ -5,14 +5,19 @@ import java.sql.DriverManager;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.nearsoft.task.socialnetwork.Person;
 import com.nearsoft.task.socialnetwork.PersonBuilder;
 import com.nearsoft.task.socialnetwork.PersonRepository;
 import com.nearsoft.task.socialnetwork.SocialNetwork;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class People {
 
     private static Person a, b, c, d;
@@ -20,18 +25,10 @@ public class People {
     private static Connection connection;
 
 	private static Connection getConnection() {
-		Connection connection = null;
-		try {
-			connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/~/tmp/h2dbs/nearsoft");
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage() + e);
-		}
-		
-		return connection;
+		return null;
 	}
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         socialNetwork = SocialNetwork.getInstance();
         //connection = getConnection();
@@ -85,9 +82,9 @@ public class People {
         Assert.assertFalse(socialNetwork.getPeople().contains(d));
     }
 
-    @Test
+    
     public void checkAddedPeople() {
-        PersonRepository repository = new PersonRepository(connection);
+        PersonRepository repository = new PersonRepository();
         List<Person> people = repository.getPeople();
 
         Assert.assertEquals(people.size(), socialNetwork.size());

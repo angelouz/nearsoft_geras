@@ -1,32 +1,27 @@
 package com.nearsoft.task.socialnetwork;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.nearsoft.task.validators.EmailValidator;
 import com.nearsoft.task.validators.PalindromeChecker;
 
+@Component
 public final class SocialNetwork {
 	
+	@Autowired
 	private PersonRepository personRepository;
 
 	private SocialNetwork() {
-		try {
-			Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/~/tmp/h2dbs/nearsoft");
-			
-			personRepository = new PersonRepository(connection);
-		} catch (SQLException e) {
-			;e.printStackTrace();
-		}
+		
 	}
 
 	private static final SocialNetwork socialNetwork = new SocialNetwork();
 
 	public static SocialNetwork getInstance() {
-
 		return socialNetwork;
 	}
 

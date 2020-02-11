@@ -1,15 +1,27 @@
 package com.nearsoft.task.socialnetwork;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "person")
 public class Person {
 	
+	@Column
 	private String name;
 	
+	@Id
 	private String email;
 	
+	@Column
 	private String aboutMe;
 	
+	@Column
 	private String phone;
 
+	@Column
 	public String getName() {
 		return name;
 	}

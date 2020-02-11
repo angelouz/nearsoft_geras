@@ -1,7 +1,8 @@
 package com.nearsoft.task.strings;
 
+
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.nearsoft.task.validators.EmailValidator;
 import com.nearsoft.task.validators.PalindromeChecker;
