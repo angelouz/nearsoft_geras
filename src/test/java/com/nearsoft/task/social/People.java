@@ -1,8 +1,7 @@
 package com.nearsoft.task.social;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
 
 import org.junit.Assert;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import com.nearsoft.task.socialnetwork.Person;
 import com.nearsoft.task.socialnetwork.PersonBuilder;
 import com.nearsoft.task.socialnetwork.PersonRepository;
-import com.nearsoft.task.socialnetwork.PhoneFormatException;
 import com.nearsoft.task.socialnetwork.SocialNetwork;
 
 public class People {
@@ -21,14 +19,22 @@ public class People {
     private static SocialNetwork socialNetwork;
     private static Connection connection;
 
-    private static Connection getConnection(){
-        return null;
-    }
+	private static Connection getConnection() {
+		Connection connection = null;
+		try {
+			connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/~/tmp/h2dbs/nearsoft");
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + e);
+		}
+		
+		return connection;
+	}
 
     @BeforeClass
     public static void setup() {
         socialNetwork = SocialNetwork.getInstance();
-        connection = getConnection();
+        //connection = getConnection();
 
         a = new PersonBuilder()
                 .setName("Jane Doe")
@@ -79,7 +85,6 @@ public class People {
         Assert.assertFalse(socialNetwork.getPeople().contains(d));
     }
 
-    
     @Test
     public void checkAddedPeople() {
         PersonRepository repository = new PersonRepository(connection);
